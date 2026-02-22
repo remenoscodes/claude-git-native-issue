@@ -25,7 +25,7 @@ It also provides slash commands for manual issue management.
 
 ```bash
 # Add the marketplace
-/plugin marketplace add remenoscodes/claude-git-native-issue
+/plugin marketplace add remenoscodes/claude-plugin-marketplace
 
 # Install the plugin
 /plugin install claude-git-native-issue
