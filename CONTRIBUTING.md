@@ -7,24 +7,23 @@ Contributions are welcome.
 ### Structure
 
 ```
-plugins/claude-git-native-issue/
-├── .claude-plugin/plugin.json    # Plugin manifest
-├── hooks/
-│   ├── hooks.json                # Hook definitions
-│   └── task-intercept.sh         # UserPromptSubmit hook script
-└── skills/
-    ├── git-issue-tracker/SKILL.md  # Ambient reference (non-user-invocable)
-    ├── setup/SKILL.md              # /setup command
-    ├── create/SKILL.md             # /create command
-    ├── issues/SKILL.md             # /issues command
-    ├── show/SKILL.md               # /show command
-    ├── close/SKILL.md              # /close command
-    └── sync/SKILL.md               # /sync command
+.claude-plugin/plugin.json    # Plugin manifest
+hooks/
+├── hooks.json                # Hook definitions
+└── task-intercept.sh         # UserPromptSubmit hook script
+skills/
+├── git-issue-tracker/SKILL.md  # Ambient reference (non-user-invocable)
+├── setup/SKILL.md              # /setup command
+├── create/SKILL.md             # /create command
+├── issues/SKILL.md             # /issues command
+├── show/SKILL.md               # /show command
+├── close/SKILL.md              # /close command
+└── sync/SKILL.md               # /sync command
 ```
 
 ### Adding a New Skill
 
-1. Create a directory under `plugins/claude-git-native-issue/skills/<name>/`
+1. Create a directory under `skills/<name>/`
 2. Add a `SKILL.md` with YAML frontmatter:
    ```yaml
    ---
@@ -48,15 +47,14 @@ Run the CI validation locally:
 
 ```bash
 # Validate JSON files
-python3 -c "import json; json.load(open('.claude-plugin/marketplace.json'))"
-python3 -c "import json; json.load(open('plugins/claude-git-native-issue/.claude-plugin/plugin.json'))"
-python3 -c "import json; json.load(open('plugins/claude-git-native-issue/hooks/hooks.json'))"
+python3 -c "import json; json.load(open('.claude-plugin/plugin.json'))"
+python3 -c "import json; json.load(open('hooks/hooks.json'))"
 
 # Validate hook script output
-bash plugins/claude-git-native-issue/hooks/task-intercept.sh | python3 -c "import json, sys; json.load(sys.stdin)"
+bash hooks/task-intercept.sh | python3 -c "import json, sys; json.load(sys.stdin)"
 
 # Check SKILL.md frontmatter
-for f in plugins/claude-git-native-issue/skills/*/SKILL.md; do
+for f in skills/*/SKILL.md; do
   head -1 "$f" | grep -q "^---" && echo "OK: $f" || echo "FAIL: $f"
 done
 ```

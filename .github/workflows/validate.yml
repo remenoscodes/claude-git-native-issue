@@ -11,20 +11,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Validate marketplace.json syntax
-        run: python3 -c "import json; json.load(open('.claude-plugin/marketplace.json'))"
-
       - name: Validate plugin.json syntax
-        run: python3 -c "import json; json.load(open('plugins/claude-git-native-issue/.claude-plugin/plugin.json'))"
+        run: python3 -c "import json; json.load(open('.claude-plugin/plugin.json'))"
 
       - name: Validate hooks.json syntax
-        run: python3 -c "import json; json.load(open('plugins/claude-git-native-issue/hooks/hooks.json'))"
+        run: python3 -c "import json; json.load(open('hooks/hooks.json'))"
 
       - name: Check required plugin.json fields
         run: |
           python3 -c "
           import json
-          data = json.load(open('plugins/claude-git-native-issue/.claude-plugin/plugin.json'))
+          data = json.load(open('.claude-plugin/plugin.json'))
           required = ['name', 'description', 'version', 'license']
           for field in required:
               assert field in data, f'Missing required field: {field}'
@@ -33,19 +30,19 @@ jobs:
 
       - name: Check SKILL.md frontmatter
         run: |
-          for f in plugins/claude-git-native-issue/skills/*/SKILL.md; do
+          for f in skills/*/SKILL.md; do
             echo "Checking $f"
             head -1 "$f" | grep -q "^---" || (echo "Missing frontmatter in $f" && exit 1)
           done
 
       - name: Validate hook script is executable
-        run: test -x plugins/claude-git-native-issue/hooks/task-intercept.sh
+        run: test -x hooks/task-intercept.sh
 
       - name: Validate hook script outputs valid JSON
-        run: bash plugins/claude-git-native-issue/hooks/task-intercept.sh | python3 -c "import json, sys; json.load(sys.stdin)"
+        run: bash hooks/task-intercept.sh | python3 -c "import json, sys; json.load(sys.stdin)"
 
       - name: Validate version matches CHANGELOG
         run: |
-          VERSION=$(python3 -c "import json; print(json.load(open('plugins/claude-git-native-issue/.claude-plugin/plugin.json'))['version'])")
+          VERSION=$(python3 -c "import json; print(json.load(open('.claude-plugin/plugin.json'))['version'])")
           grep -q "\[${VERSION}\]" CHANGELOG.md || (echo "Version $VERSION not found in CHANGELOG.md" && exit 1)
           echo "Version $VERSION found in CHANGELOG.md"

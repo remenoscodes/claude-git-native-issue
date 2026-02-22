@@ -1,7 +1,7 @@
 {
   "name": "claude-git-native-issue",
   "description": "Replace Claude's internal task management with git-native-issue. Autonomous issue creation, tracking, and resolution stored as Git refs. Distributed, offline-first, travels with your code.",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "GPL-2.0",
   "keywords": ["git", "issues", "tasks", "tracking", "distributed", "offline", "git-native-issue", "task-management"],
   "author": {
