@@ -1,0 +1,13 @@
+{
+  "name": "claude-git-native-issue",
+  "description": "Replace Claude's internal task management with git-native-issue. Autonomous issue creation, tracking, and resolution stored as Git refs. Distributed, offline-first, travels with your code.",
+  "version": "1.0.0",
+  "license": "GPL-2.0",
+  "keywords": ["git", "issues", "tasks", "tracking", "distributed", "offline", "git-native-issue", "task-management"],
+  "author": {
+    "name": "Emerson Soares",
+    "url": "https://github.com/remenoscodes"
+  },
+  "homepage": "https://github.com/remenoscodes/claude-git-native-issue",
+  "repository": "https://github.com/remenoscodes/claude-git-native-issue"
+}

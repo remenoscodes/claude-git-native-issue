@@ -1,0 +1,18 @@
+{
+  "name": "claude-git-native-issue",
+  "metadata": {
+    "description": "Git-native issue tracking integration for Claude Code"
+  },
+  "owner": {
+    "name": "Emerson Soares",
+    "url": "https://github.com/remenoscodes"
+  },
+  "plugins": [
+    {
+      "name": "claude-git-native-issue",
+      "description": "Replace Claude's internal task management with git-native-issue. Distributed, offline-first issue tracking that travels with your code.",
+      "source": "./plugins/claude-git-native-issue",
+      "homepage": "https://github.com/remenoscodes/claude-git-native-issue"
+    }
+  ]
+}

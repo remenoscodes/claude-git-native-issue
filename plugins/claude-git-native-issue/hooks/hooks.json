@@ -1,0 +1,16 @@
+{
+  "description": "Remind Claude to use git-issue for task tracking on every prompt",
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/hooks/task-intercept.sh",
+            "timeout": 5
+          }
+        ]
+      }
+    ]
+  }
+}
