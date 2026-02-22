@@ -13,17 +13,24 @@ Guide the user through initializing git-native-issue in the current repository a
 ### 1. Check prerequisites
 
 Run these checks in parallel:
-- `which git-issue 2>/dev/null` — verify git-issue is installed
 - `git rev-parse --git-dir 2>/dev/null` — verify we are in a git repo
-
-If git-issue is not installed:
-- Tell the user: "git-native-issue is not installed."
-- Provide the install command: `brew install remenoscodes/git-native-issue/git-native-issue`
-- Stop here until installed.
+- `which git-issue 2>/dev/null` — verify some `git issue` command exists
+- `git issue create --help 2>/dev/null` — verify it is git-native-issue (not Spinellis' git-issue, which uses `new` instead of `create`)
 
 If not in a git repo:
 - Tell the user: "You are not in a git repository. git-native-issue requires a git repo."
 - Stop here.
+
+If no `git-issue` found at all:
+- Tell the user: "git-native-issue is not installed."
+- Provide the install command: `brew install remenoscodes/git-native-issue/git-native-issue`
+- Stop here until installed.
+
+If `git-issue` exists but `git issue create --help` fails (wrong tool):
+- Tell the user: "A different `git issue` tool is installed (likely Spinellis' git-issue). This plugin requires git-native-issue."
+- Provide the install command: `brew install remenoscodes/git-native-issue/git-native-issue`
+- Warn: both tools use the `git issue` command — the user may need to adjust PATH priority or uninstall the other tool.
+- Stop here until resolved.
 
 ### 2. Check if already initialized
 

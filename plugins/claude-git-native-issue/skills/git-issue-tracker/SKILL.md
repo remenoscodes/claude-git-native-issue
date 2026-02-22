@@ -254,8 +254,9 @@ git issue fsck [--quiet]
 Before running any `git issue` command:
 
 1. **Verify git repo**: `git rev-parse --git-dir 2>/dev/null` — if this fails, you are NOT in a git repo. Do not attempt git-issue operations.
-2. **Verify git-issue installed**: `which git-issue 2>/dev/null` — if missing, tell the user: `brew install remenoscodes/git-native-issue/git-native-issue`
-3. **Check initialization**: `git config --get issue.remote 2>/dev/null` — if not set, run `git issue init` before the first operation. This is a one-time setup per repo.
+2. **Verify git-native-issue installed**: `which git-issue 2>/dev/null` — if missing, tell the user: `brew install remenoscodes/git-native-issue/git-native-issue`
+3. **Verify correct tool**: `git issue create --help 2>/dev/null` — if this fails but step 2 passed, the user has a different `git issue` tool (e.g., Spinellis' git-issue, which uses `new` instead of `create`). Tell the user: "A different `git issue` tool is installed. This plugin requires git-native-issue." Provide: `brew install remenoscodes/git-native-issue/git-native-issue`
+4. **Check initialization**: `git config --get issue.remote 2>/dev/null` — if not set, run `git issue init` before the first operation. This is a one-time setup per repo.
 
 ## Provider Detection
 
