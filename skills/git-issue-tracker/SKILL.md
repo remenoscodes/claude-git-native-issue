@@ -343,6 +343,49 @@ When working with `TeamCreate` / multi-agent teams:
 3. **Assignees are for humans only**: Use `-a email` only when assigning to a person on the team, never for Claude instances
 4. **Monitor progress**: `git issue ls -l in-progress` to see active work across the team
 
+## Review Cycle Protocol (Multi-Agent)
+
+When working in coordinated sessions with other agents (Claude, Codex, Gemini):
+
+### Source of truth
+- **NEVER use `gh` for issue reads.** Use `git issue show/ls/search`.
+- `gh` is ONLY for: PR creation, API calls not covered by git-native-issue.
+- After mutations (create/close/comment/edit), ALWAYS run both:
+  1. `git issue sync <provider>`
+  2. `git push origin 'refs/issues/*:refs/issues/*'`
+
+### After every commit
+Signal the blackboard with issue ID and commit SHA:
+```bash
+bb signal <reviewer_agent> handoff "<commit_sha>: <description>" "<issue_id>"
+```
+Include: issue ID, files changed, what to review.
+
+### After closing an issue
+1. `git issue state <id> --close -m "<reason>"`
+2. `git issue sync <provider>`
+3. `git push origin 'refs/issues/*:refs/issues/*'`
+4. `bb signal <reviewer_agent> completion "<issue_id> closed: <summary>"`
+
+### Before starting work
+1. `bb status` — check for pending signals and active sessions
+2. If another agent is working on the same issue: do NOT start. Pick a different issue.
+3. `git issue edit <id> --add-label in-progress`
+4. `bb join <agent> "<issue_id>: <description>"`
+
+### Receiving review feedback
+- Pull latest: `git fetch origin 'refs/issues/*:refs/issues/*'` then `git issue show <id>`
+- Evaluate critically — verify reviewer claims against actual code
+- Push back with technical rationale when reviewer is wrong
+- Accept and fix when reviewer is right — then signal back: `bb signal <reviewer> info "Fixed: <description>"`
+- NEVER blindly implement all suggestions
+
+### As reviewer
+- Consume signal: `bb consume <id>`
+- Pull latest refs, read issue via `git issue show <id>`
+- Leave feedback: `git issue comment <id> -m "<feedback>"`
+- Signal back: `bb signal <author> info "Review: approved|changes_requested"`
+
 ## Output Parsing
 
 When you need to extract the issue ID from command output:
