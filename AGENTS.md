@@ -2,7 +2,7 @@
 
 Claude Code plugin that replaces internal task management with git-native-issue. Autonomous issue creation, tracking, and resolution stored as Git refs.
 
-Inherits workspace conventions from `~/CLAUDE.md`.
+Inherits workspace conventions from `~/AGENTS.md`.
 
 ## Status
 - **Version**: 1.0.1
